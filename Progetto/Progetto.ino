@@ -1,18 +1,22 @@
 
+//LIBRERIE ACCELEROMETRO------------------------------------------------------------------------------------
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_MMA8451.h>
 
-//******************************************************************************************LIBRERIE OTA****************************
+//LIBRERIE TIMER--------------------------------------------------------------------------------------------
+#include <Ticker.h> 
+Ticker Timer;
+
+//LIBRERIE OTA----------------------------------------------------------------------------------------------
 #include <ArduinoOTA.h>
 #include <FS.h> 
+File fsUploadFile;
 
 const char* HOME_ssid = "Vodafone-Menegatti";
 const char* HOME_pass = "Menegatti13";
 
-long X, Y, Z;
-
-File fsUploadFile;
+long X, Y, Z, Acc;
 
 Adafruit_MMA8451 mma = Adafruit_MMA8451();//INIZIALIZZA ACCELEROMETRO
 
@@ -23,6 +27,8 @@ void setup()
 
   OTA_Setup();
   MMA8451_Setup();
+
+  Timer.attach_ms(50, Timer_interrupt);//INIZIALIZZA TIMER
 
   Serial.println("Setup OK!");
 }

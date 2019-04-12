@@ -17,16 +17,6 @@ void MMA8451_Setup()
 
 void Event_MMA8451()
 {
-  // Get a new sensor event
-  /*sensors_event_t event; 
-  mma.getEvent(&event);
-  // Display the results (acceleration is measured in m/s^2)
-  Serial.print("X: \t"); Serial.print(event.acceleration.x); Serial.print("\t");
-  Serial.print("Y: \t"); Serial.print(event.acceleration.y); Serial.print("\t");
-  Serial.print("Z: \t"); Serial.print(event.acceleration.z); Serial.print("\t");
-  Serial.println("m/s^2 ");*/
-
-  // Read the 'raw' data in 14-bit counts
   mma.read();
   X = mma.x;
   Y = mma.y;

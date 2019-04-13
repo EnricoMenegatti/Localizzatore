@@ -18,7 +18,7 @@ void MMA8451_Setup()
 void Event_MMA8451()
 {
   mma.read();
-  X = mma.x;
-  Y = mma.y;
-  Z = mma.z;
+  X = abs(mma.x);
+  Y = abs(mma.y);
+  Z = abs(mma.z);
 }

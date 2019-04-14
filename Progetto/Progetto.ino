@@ -6,6 +6,16 @@ TinyGPSPlus gps;
 
 SoftwareSerial MySerial(12, 14);//RX, TX
 
+//LIBRERIE SIM----------------------------------------------------------------------------------------------
+#include <GSMSim.h>
+
+#define RX 0
+#define TX 2
+#define RESET 3
+#define BAUD 9600
+
+GSMSim gsm(RX, TX, RESET);
+
 //LIBRERIE ACCELEROMETRO------------------------------------------------------------------------------------
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -35,6 +45,7 @@ void setup()
   Serial.println("Setup...");
 
   GPS_Setup();
+  SIM_Setup();
   OTA_Setup();
   MMA8451_Setup();
 

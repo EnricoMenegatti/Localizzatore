@@ -6,6 +6,7 @@ void GPS_Setup()
 
 void dati_GPS()
 {
+  MySerial.listen();
   //printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
   //printFloat(gps.hdop.hdop(), gps.hdop.isValid(), 6, 1);
   printFloat(gps.location.lat(), gps.location.isValid(), 11, 6);

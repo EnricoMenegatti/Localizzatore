@@ -1,8 +1,7 @@
 
 void SIM_Setup()
 {
-  gsm.start(BAUD);
-  delay(1000);
+  gsm.start(9600);
 
   gsm.listen();
   Serial.print("Manufacturer:\t\t");
@@ -37,9 +36,10 @@ void SIM_Setup()
   delay(250);
 }
 
-void SIM_AT()
+void Dati_SIM()
 {
-
+  gsm.listen();
+  Serial.print("Manufacturer:\t\t");
+  Serial.println(gsm.moduleManufacturer());
 }
-
   

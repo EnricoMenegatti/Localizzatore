@@ -4,7 +4,7 @@ void GPS_Setup()
   MySerial.begin(9600);//NON CAMBIARE. BAUDRATE GPS
 }
 
-void dati_GPS()
+void Dati_GPS()
 {
   MySerial.listen();
   //printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
@@ -17,8 +17,6 @@ void dati_GPS()
   //printFloat(gps.course.deg(), gps.course.isValid(), 7, 2);
   printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
   Serial.println("");
-  
-  smartDelay(1000);
 
   if (millis() > 5000 && gps.charsProcessed() < 10)
     Serial.println(F("No GPS data received: check wiring"));

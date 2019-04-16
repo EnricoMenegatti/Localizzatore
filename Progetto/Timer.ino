@@ -2,5 +2,5 @@
 void Timer_interrupt()
 {
 	Acc = (X + Y + Z) / 3;
-  //Serial.println(Acc);
+  //Serial1.println(Acc);
 }

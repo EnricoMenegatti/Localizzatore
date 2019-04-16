@@ -1,20 +1,13 @@
 
 //LIBRERIE GPS----------------------------------------------------------------------------------------------
 #include <TinyGPS++.h>
-#include <SoftwareSerial.h>
 TinyGPSPlus gps;
-
-SoftwareSerial MySerial(12, 14);//RX, TX
 
 //LIBRERIE SIM----------------------------------------------------------------------------------------------
 #include <GSMSim.h>
+#include <SoftwareSerial.h>
 
-#define RX 0
-#define TX 2
-#define RESET 3
-#define BAUD 9600
-
-GSMSim gsm(RX, TX, RESET);
+GSMSim gsm(12, 14);//RX, TX
 
 //LIBRERIE ACCELEROMETRO------------------------------------------------------------------------------------
 #include <Wire.h>
@@ -30,20 +23,16 @@ Ticker Timer;
 #include <FS.h> 
 File fsUploadFile;
 
-String tempSerial, tempGSM;
-
 const char* HOME_ssid = "Vodafone-Menegatti";
 const char* HOME_pass = "Menegatti13";
 
+unsigned long thisTime, lastTime;
 long X, Y, Z, Acc;
 
 Adafruit_MMA8451 mma = Adafruit_MMA8451();//INIZIALIZZA ACCELEROMETRO
 
 void setup() 
 {
-  Serial.begin(115200);
-  Serial.println("Setup...");
-
   GPS_Setup();
   SIM_Setup();
   OTA_Setup();
@@ -51,13 +40,21 @@ void setup()
 
   Timer.attach_ms(50, Timer_interrupt);//INIZIALIZZA TIMER
 
-  Serial.println("Setup OK!");
+  Serial1.println("Setup OK!");
 
-  //sim.sendSms("+393382606078","prova");
 }
 
-void loop() {
+void loop() 
+{
+  thisTime = millis();
+  if(thisTime - lastTime > 1000)//ROUTINE ESEGUITA OGNI 1000ms SENZA BLOCCARE IL CICLO
+  {
+    Dati_GPS();
+    lastTime = millis();
+  }
+
   Event_MMA8451();
-  dati_GPS();
-   //Serial.print("\t"); Serial.print(X); Serial.print("\t"); Serial.print(Y); Serial.print("\t"); Serial.println(Z);//STAMPA SU PLOTTER
+  Dati_GPS();
+
+   //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER
 }

@@ -1,45 +1,38 @@
 
 void SIM_Setup()
 {
-  gsm.start(BAUD);
-  delay(1000);
+  gsm.start(9600);
 
-  gsm.listen();
-  Serial.print("Manufacturer:\t\t");
-  Serial.println(gsm.moduleManufacturer());
+  Serial1.print("Manufacturer:\t\t");
+  Serial1.println(gsm.moduleManufacturer());
   delay(250);
-  Serial.print("Model:\t\t\t");
-  Serial.println(gsm.moduleModel());
+  Serial1.print("Model:\t\t\t");
+  Serial1.println(gsm.moduleModel());
   delay(250);
-  Serial.print("Revision:\t\t");
-  Serial.println(gsm.moduleRevision());
+  Serial1.print("Revision:\t\t");
+  Serial1.println(gsm.moduleRevision());
   delay(250);
-  Serial.print("IMEI:\t\t\t");
-  Serial.println(gsm.moduleIMEI());
+  Serial1.print("IMEI:\t\t\t");
+  Serial1.println(gsm.moduleIMEI());
   delay(250);
-  Serial.print("IMSI:\t\t\t");
-  Serial.println(gsm.moduleIMSI());
+  Serial1.print("IMSI:\t\t\t");
+  Serial1.println(gsm.moduleIMSI());
   delay(250);
-  Serial.print("ICCID:\t\t\t");
-  Serial.println(gsm.moduleICCID());
+  Serial1.print("ICCID:\t\t\t");
+  Serial1.println(gsm.moduleICCID());
   delay(250);
-  Serial.print("Is Connected?:\t\t");
-  Serial.println(gsm.isRegistered());
+  Serial1.print("Is Connected?:\t\t");
+  Serial1.println(gsm.isRegistered());
   delay(250);
-  Serial.print("Signal Quality:\t\t");
-  Serial.println(gsm.signalQuality());
+  Serial1.print("Signal Quality:\t\t");
+  Serial1.println(gsm.signalQuality());
   delay(250);
-  Serial.print("Operator:\t\t");
-  Serial.println(gsm.operatorName());
+  Serial1.print("Operator:\t\t");
+  Serial1.println(gsm.operatorName());
   delay(250);
-  Serial.print("Operator From Sim:\t");
-  Serial.println(gsm.operatorNameFromSim());
+  Serial1.print("Operator From Sim:\t");
+  Serial1.println(gsm.operatorNameFromSim());
   delay(250);
-}
-
-void SIM_AT()
-{
-
 }
 
   

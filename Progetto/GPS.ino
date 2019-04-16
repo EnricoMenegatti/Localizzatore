@@ -24,20 +24,18 @@ void Dati_GPS()
     Serial1.println(F("No GPS data received: check wiring"));
 }
 
-bool IsInRun_GPS()
+bool IsInRun_GPS(float Speed_value, bool Speed_valid)
 {
-  if(gps.speed.kmph() >= IS_IN_RUN_LIMIT_GPS && gps.speed.isValid() && N_GPS_value <= IS_IN_RUN_NUMBER_GPS)
+  if(Speed_value >= IS_IN_RUN_LIMIT_GPS && Speed_valid && N_GPS_value <= IS_IN_RUN_NUMBER_GPS)
   {
       N_GPS_value ++;
   }
-  else if(gps.speed.kmph() < IS_IN_RUN_LIMIT_GPS && gps.speed.isValid() && N_GPS_value > 0)
+  else if(Speed_value < IS_IN_RUN_LIMIT_GPS && Speed_valid && N_GPS_value > 0)
   {
       N_GPS_value --;
   }
   else
-  {
-
-  }
+  {}
 
   if(N_GPS_value <= 0)
   {

@@ -36,13 +36,13 @@ bool IsInRun_ACC(long Acc_value)//DEFINISCE SE SIEAMO IN MOVIMENTO
   else
   {}
 
-  if(N_ACC_value <= 0)
-  {
-    return false;    
-  }
-  else
+  if(N_ACC_value >= 1000 / TIMER_TIME_MS)//SE IN MOVIMENTO PER 1000ms
   {
     return true;
+  }
+  else if(N_ACC_value <= 0)
+  {
+    return false;    
   }
 }
 

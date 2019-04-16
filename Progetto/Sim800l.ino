@@ -35,4 +35,4 @@ void SIM_Setup()
   delay(250);
 }
 
-  
+void Notifica(){}

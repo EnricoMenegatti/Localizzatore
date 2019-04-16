@@ -20,7 +20,7 @@ GSMSim gsm(12, 14);//RX, TX
 #include <Adafruit_MMA8451.h>
 
 #define IS_IN_RUN_LIMIT_ACC 1000//NUMERO DI CONFRONTO PER VALORE ACCELEROMETRO
-#define IS_IN_RUN_NUMBER_ACC 50//NUMERO DI CONFRONTI MAGGIORI DI "IS_IN_RUN_LIMIT"
+#define IS_IN_RUN_NUMBER_ACC 500//NUMERO DI CONFRONTI MAGGIORI DI "IS_IN_RUN_LIMIT"
 
 bool InRun_ACC;
 int N_ACC_value;
@@ -62,12 +62,12 @@ void loop()
   thisTime = millis();
   if(thisTime - lastTime > 1000 && InRun_ACC)//ROUTINE ESEGUITA OGNI 1000ms SENZA BLOCCARE IL CICLO E SE SIAMO IN RUN
   {
-    //Dati_GPS();
+    if(IsInRun_GPS(gps.speed.kmph(), gps.speed.isValid()))
+    {
+      Notifica();
+    }
     lastTime = millis();
   }
-
-  Dati_MMA8451();
-  Dati_GPS();
 
    //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER
 }

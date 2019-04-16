@@ -35,4 +35,31 @@ void SIM_Setup()
   delay(250);
 }
 
-void Notifica(){}
+void Notifica()
+{
+  Serial1.print("Connect to Internet: ");
+  Serial1.println(gsm.gprsConnectBearer());//APRI CONNESSIONE INTERNET
+  delay(5000);
+  
+  // Set Gmail Account
+  // If you take an error when sending email with google, please check display unlock captcha setting on google
+  // please use this url for this.
+  // https://www.google.com/accounts/DisplayUnlockCaptcha
+  // for gmail, dont use @gmail.com on your username.
+  // at the last, if you take an authendication error, please check 2 way verification settings on your account.
+  Serial1.print("Set gmail smtp configuration: ");
+  Serial1.println(gsm.emailSMTPGmail("enricomenegatti13", "Menegatti13"));
+
+  Serial1.print("Write email to someone: ");
+  // In body, if you want to use break, use \b, for tab use \t on your message body string. Only use Ascii characters on title and body, otherwise your mail not send.
+  Serial1.println(gsm.emailSMTPWrite("enricomenegatti13@gmail.com", "enri13@hotmail.it", "Allarme", "Attenzione in movimento!!!"));
+
+  delay(1000);
+
+  Serial1.print("Send email... : ");
+  Serial1.println(gsm.emailSMTPSend());//INVIA EMAIL
+  
+  // Close internet connection
+  Serial1.print("Close Internet: ");
+  Serial1.println(gsm.gprsCloseConn());//CHIUDI CONNESSIONE INTERNET
+}

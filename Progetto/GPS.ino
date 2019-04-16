@@ -19,11 +19,34 @@ void Dati_GPS()
   //printFloat(gps.course.deg(), gps.course.isValid(), 7, 2);
   printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
   Serial1.println("");
-  
-  smartDelay(1000);
 
   if (millis() > 5000 && gps.charsProcessed() < 10)
     Serial1.println(F("No GPS data received: check wiring"));
+}
+
+bool IsInRun_GPS()
+{
+  if(gps.speed.kmph() >= IS_IN_RUN_LIMIT_GPS && gps.speed.isValid() && N_GPS_value <= IS_IN_RUN_NUMBER_GPS)
+  {
+      N_GPS_value ++;
+  }
+  else if(gps.speed.kmph() < IS_IN_RUN_LIMIT_GPS && gps.speed.isValid() && N_GPS_value > 0)
+  {
+      N_GPS_value --;
+  }
+  else
+  {
+
+  }
+
+  if(N_GPS_value <= 0)
+  {
+    return false;    
+  }
+  else
+  {
+    return true;
+  }
 }
 
 // This custom version of delay() ensures that the gps object

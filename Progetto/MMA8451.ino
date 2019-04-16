@@ -15,10 +15,34 @@ void MMA8451_Setup()
   Serial1.println("G");
 }
 
-void Event_MMA8451()
+void Dati_MMA8451()
 {
   mma.read();
   X = abs(mma.x);
   Y = abs(mma.y);
   Z = abs(mma.z);
 }
+
+bool IsInRun_ACC(long Acc_value)//DEFINISCE SE SIEAMO IN MOVIMENTO
+{
+  if(Acc_value >= IS_IN_RUN_LIMIT_ACC && N_ACC_value <= IS_IN_RUN_NUMBER_ACC)
+  {
+      N_ACC_value ++;
+  }
+  else if(Acc_value < IS_IN_RUN_LIMIT_ACC && N_ACC_value > 0)
+  {
+      N_ACC_value --;
+  }
+  else
+  {}
+
+  if(N_ACC_value <= 0)
+  {
+    return false;    
+  }
+  else
+  {
+    return true;
+  }
+}
+

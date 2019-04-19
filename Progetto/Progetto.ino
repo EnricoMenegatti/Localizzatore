@@ -4,6 +4,7 @@
 TinyGPSPlus gps;
 
 //DICHIARAZIONI SIM----------------------------------------------------------------------------------------------
+#include "Adafruit_FONA.h"
 #include <GSMSim.h>
 #include <SoftwareSerial.h>
 
@@ -11,8 +12,14 @@ TinyGPSPlus gps;
 #define IS_IN_RUN_NUMBER_GPS 10
 
 int N_GPS_value;
+uint8_t type;
+char imei[16] = {0}; // Use this for device ID
 
-GSMSim gsm(12, 14);//RX, TX
+//GSMSim gsm(12, 14);//RX, TX
+SoftwareSerial gsm = SoftwareSerial(12, 14, false, 256); // RX, TX, inverted logic, buffer size
+SoftwareSerial *gsmSerial = &gsm;
+
+Adafruit_FONA fona = Adafruit_FONA(7);
 
 //DICHIARAZIONI ACCELEROMETRO------------------------------------------------------------------------------------
 #include <Wire.h>

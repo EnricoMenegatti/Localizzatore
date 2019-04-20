@@ -8,7 +8,7 @@ void SIM_Setup()
   Serial1.println(F("Configuring to 9600 baud"));
   gsm.println("AT+IPR=9600"); // Set baud rate
   delay(100); // Short pause to let the command run
-  //gsm.begin(9600);
+  gsm.begin(9600);
   if (! fona.begin(gsm)) 
   {
     Serial1.println(F("Couldn't find FONA"));
@@ -45,7 +45,7 @@ void SIM_Setup()
     case SIM7500E:
       Serial1.println(F("SIM7500E (European)")); break;
     default:
-      Serial1.println(F("???")); break;
+      Serial1.println(type); break;
   }
   
   // Print module IMEI number.

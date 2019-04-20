@@ -23,8 +23,24 @@ void Dati_MMA8451()
   Z = abs(mma.z);
 }
 
-bool IsInRun_ACC(long Acc_value)//DEFINISCE SE SIEAMO IN MOVIMENTO
+bool IsInRun_ACC()//DEFINISCE SE SIEAMO IN MOVIMENTO
 {
+  if(Acc < Last_Acc - LAST_ACC_OFFSET || Acc > Last_Acc + LAST_ACC_OFFSET || Acc > IS_IN_RUN_LIMIT_ACC)
+  {
+    N_ACC_value ++;
+  }
+
+  Last_Acc = Acc;
+
+  if(N_ACC_value >= IS_IN_RUN_NUMBER_ACC)//AZZERATO SU LOOP PRINCIPALE
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+  /*
   if(Acc_value >= IS_IN_RUN_LIMIT_ACC && N_ACC_value <= IS_IN_RUN_NUMBER_ACC)
   {
       N_ACC_value ++;
@@ -35,7 +51,7 @@ bool IsInRun_ACC(long Acc_value)//DEFINISCE SE SIEAMO IN MOVIMENTO
   }
   else
   {}
-
+  
   if(N_ACC_value >= 1000 / TIMER_TIME_MS)//SE IN MOVIMENTO PER 1000ms
   {
     return true;
@@ -43,6 +59,5 @@ bool IsInRun_ACC(long Acc_value)//DEFINISCE SE SIEAMO IN MOVIMENTO
   else if(N_ACC_value <= 0)
   {
     return false;    
-  }
+  }*/
 }
-

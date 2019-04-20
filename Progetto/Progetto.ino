@@ -19,19 +19,20 @@ char imei[16] = {0}; // Use this for device ID
 SoftwareSerial gsm = SoftwareSerial(12, 14, false, 256); // RX, TX, inverted logic, buffer size
 SoftwareSerial *gsmSerial = &gsm;
 
-Adafruit_FONA fona = Adafruit_FONA(7);
+Adafruit_FONA fona = Adafruit_FONA(0);
 
 //DICHIARAZIONI ACCELEROMETRO------------------------------------------------------------------------------------
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_MMA8451.h>
 
-#define IS_IN_RUN_LIMIT_ACC 1000//NUMERO DI CONFRONTO PER VALORE ACCELEROMETRO
-#define IS_IN_RUN_NUMBER_ACC 500//NUMERO DI CONFRONTI MAGGIORI DI "IS_IN_RUN_LIMIT"
+#define IS_IN_RUN_LIMIT_ACC 550//NUMERO DI CONFRONTO PER VALORE ACCELEROMETRO
+#define IS_IN_RUN_NUMBER_ACC 5//NUMERO DI VIBRAZIONE IN UN SECONDO
+#define LAST_ACC_OFFSET 50//DIFFERENZA MASSIMA TRA VALORE ATTUALE E PRECEDENTE
 
 bool InRun_ACC;
 int N_ACC_value;
-long X, Y, Z, Acc;
+long X, Y, Z, Acc, Last_Acc;
 
 Adafruit_MMA8451 mma = Adafruit_MMA8451();//INIZIALIZZA ACCELEROMETRO
 
@@ -40,6 +41,8 @@ Adafruit_MMA8451 mma = Adafruit_MMA8451();//INIZIALIZZA ACCELEROMETRO
 Ticker Timer;
 
 #define TIMER_TIME_MS 50//TEMPO TIMER
+
+long Timer_cont;
 
 //DICHIARAZIONI OTA----------------------------------------------------------------------------------------------
 #include <ArduinoOTA.h>
@@ -74,6 +77,12 @@ void loop()
       Notifica();
     }
     lastTime = millis();
+  }
+
+  if(Timer_cont >= 1000 / TIMER_TIME_MS)
+  {
+    N_ACC_value = 0;
+    Timer_cont = 0;
   }
 
    //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER

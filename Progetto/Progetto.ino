@@ -3,6 +3,7 @@
 #include <TinyGPS++.h>
 TinyGPSPlus gps;
 
+float temp;
 //DICHIARAZIONI SIM----------------------------------------------------------------------------------------------
 #include "Adafruit_FONA.h"
 #include <GSMSim.h>
@@ -38,9 +39,12 @@ Adafruit_MMA8451 mma = Adafruit_MMA8451();//INIZIALIZZA ACCELEROMETRO
 
 //DICHIARAZIONI TIMER--------------------------------------------------------------------------------------------
 #include <Ticker.h> 
-Ticker Timer;
+Ticker Timer_Acc;
+Ticker Timer_gps;
+Ticker Timer_1;
 
-#define TIMER_TIME_MS 50//TEMPO TIMER
+#define TIMER_ACC_MS 50//TEMPO TIMER ACCELEROMETRO
+#define TIMER_GPS_MS 1000//TEMPO TIMER GPS
 
 long Timer_cont;
 
@@ -52,16 +56,16 @@ File fsUploadFile;
 const char* HOME_ssid = "Vodafone-Menegatti";
 const char* HOME_pass = "Menegatti13";
 
-unsigned long thisTime, lastTime;
-
 void setup() 
 {
   GPS_Setup();
   SIM_Setup();
-  OTA_Setup();
+  //OTA_Setup();
   MMA8451_Setup();
 
-  Timer.attach_ms(TIMER_TIME_MS, Timer_interrupt);//INIZIALIZZA TIMER
+  Timer_Acc.attach_ms(TIMER_ACC_MS, Timer_Acc_interrupt);//INIZIALIZZA TIMER
+  Timer_gps.attach_ms(TIMER_GPS_MS, Timer_gps_interrupt);//INIZIALIZZA TIMER
+  Timer_1.attach_ms(1000, Timer_1_interrupt);//INIZIALIZZA TIMER
 
   Serial1.println("Setup OK!");
 
@@ -69,21 +73,5 @@ void setup()
 
 void loop() 
 {
-  thisTime = millis();
-  if(thisTime - lastTime > 1000 && InRun_ACC)//ROUTINE ESEGUITA OGNI 1000ms SENZA BLOCCARE IL CICLO E SE SIAMO IN RUN
-  {
-    if(IsInRun_GPS(gps.speed.kmph(), gps.speed.isValid()))
-    {
-      Notifica();
-    }
-    lastTime = millis();
-  }
-
-  if(Timer_cont >= 1000 / TIMER_TIME_MS)
-  {
-    N_ACC_value = 0;
-    Timer_cont = 0;
-  }
-
    //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER
 }

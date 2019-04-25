@@ -69,12 +69,15 @@ static void printFloat(float val, bool valid, int len, int prec)
   }
   else
   {
-    Serial1.print(val, prec);
+    Serial1.println(val, prec);
     int vi = abs((int)val);
+    Serial1.println(vi);
     int flen = prec + (val < 0.0 ? 2 : 1); // . and -
+    Serial1.println(flen);
     flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
+    Serial1.println(flen);
     for (int i=flen; i<len; ++i)
-      Serial1.print(' ');
+      Serial1.println(' ');
   }
   smartDelay(0);
 }

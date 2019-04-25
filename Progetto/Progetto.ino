@@ -73,5 +73,8 @@ void setup()
 
 void loop() 
 {
+  while (Serial.available() > 0)//LETTURA DATI GPS
+    gps.encode(Serial.read());
+    
    //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER
 }

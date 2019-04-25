@@ -22,14 +22,9 @@ void Timer_gps_interrupt()
 {
   if(InRun_ACC)//SE SIAMO IN RUN
   {
-    //Dati_GPS();
-    //temp = gps.location.lat();
     Serial1.print(gps.location.lat(), 6);
-    smartDelay(0);
     Serial1.print(", ");
     Serial1.println(gps.speed.kmph(),2);
-    smartDelay(0);
-    //printFloat(gps.location.lat(), 1, 11, 6);
     /*if(IsInRun_GPS(gps.speed.kmph(), gps.speed.isValid()))
     {
       Notifica();

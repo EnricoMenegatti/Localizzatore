@@ -58,11 +58,33 @@ const char* HOME_ssid = "Vodafone-Menegatti";
 const char* HOME_pass = "Menegatti13";
 const char* HOST_name = "ESP_GPS-Tracker";
 
+//DICHIARAZIONI WI-FI--------------------------------------------------------------------------------------------
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <ESP8266WebServer.h>
+#include <WebSocketsServer.h>
+#include <ESP8266mDNS.h>
+#include <WiFiUdp.h>
+
+const char* WIFI_ssid = "WIFI_GPS-Tracker";
+const char* WIFI_pass = "Menegatti13";
+
+IPAddress IP(192,168,4,1);
+IPAddress GTW(192,168,4,1);
+IPAddress mask = (255, 255, 255, 0);
+
+ESP8266WebServer server(80);
+WebSocketsServer webSocket(81);
+
+int modalita;
+
 void setup() 
 {
   GPS_Setup();
-  //SIM_Setup();
   OTA_Setup();
+  //WIFI_Setup();
+  SPIFFS_Setup();
+  //SIM_Setup();
   MMA8451_Setup();
 
   Timer_Acc.attach_ms(TIMER_ACC_MS, Timer_Acc_interrupt);//INIZIALIZZA TIMER
@@ -76,9 +98,10 @@ void setup()
 
 void loop() 
 {  
-  while (Serial.available() > 0)//LETTURA DATI GPS
+  while(Serial.available() > 0)//LETTURA DATI GPS
     gps.encode(Serial.read());
 
+  webSocket.loop();
+  server.handleClient();
   ArduinoOTA.handle();
-   //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER
 }

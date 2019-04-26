@@ -16,7 +16,7 @@ void OTA_Setup()
   // ArduinoOTA.setPort(8266);
 
   // Hostname defaults to esp8266-[ChipID]
-   ArduinoOTA.setHostname("ESP_Remote-Camera");
+   ArduinoOTA.setHostname(HOST_name);
 
   // No authentication by default
   // ArduinoOTA.setPassword((const char *)"123");

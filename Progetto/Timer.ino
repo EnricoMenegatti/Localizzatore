@@ -36,3 +36,17 @@ void Timer_1_interrupt()
 {
   N_ACC_value = 0;
 }
+
+void Timer_gsm_interrupt()
+{
+  uint8_t n = fona.getNetworkStatus();
+  Serial1.print(F("Network status "));
+  Serial1.print(n);
+  Serial1.print(F(": "));
+  if (n == 0) Serial1.println(F("Not registered"));
+  if (n == 1) Serial1.println(F("Registered (home)"));
+  if (n == 2) Serial1.println(F("Not registered (searching)"));
+  if (n == 3) Serial1.println(F("Denied"));
+  if (n == 4) Serial1.println(F("Unknown"));
+  if (n == 5) Serial1.println(F("Registered roaming"));
+}

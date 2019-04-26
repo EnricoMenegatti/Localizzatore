@@ -66,7 +66,7 @@ void SIM_Setup()
   //fona.setNetworkSettings(F("your APN"), F("your username"), F("your password"));
   //fona.setNetworkSettings(F("m2m.com.attz")); // For AT&T IoT SIM card
   //fona.setNetworkSettings(F("telstra.internet")); // For Telstra (Australia) SIM card - CAT-M1 (Band 28)
-  fona.setNetworkSettings(F("mobile.vodafone.it")); // For Hologram SIM card
+  fona.setNetworkSettings(F("web.omnitel.it")); // For Hologram SIM card
 
   // Optionally configure HTTP gets to follow redirects over SSL.
   // Default is not to follow SSL redirects, however if you uncomment

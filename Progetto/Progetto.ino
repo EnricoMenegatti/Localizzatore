@@ -42,6 +42,7 @@ Adafruit_MMA8451 mma = Adafruit_MMA8451();//INIZIALIZZA ACCELEROMETRO
 Ticker Timer_Acc;
 Ticker Timer_gps;
 Ticker Timer_1;
+Ticker Timer_gsm;
 
 #define TIMER_ACC_MS 50//TEMPO TIMER ACCELEROMETRO
 #define TIMER_GPS_MS 1000//TEMPO TIMER GPS
@@ -55,26 +56,29 @@ File fsUploadFile;
 
 const char* HOME_ssid = "Vodafone-Menegatti";
 const char* HOME_pass = "Menegatti13";
+const char* HOST_name = "ESP_GPS-Tracker";
 
 void setup() 
 {
   GPS_Setup();
-  SIM_Setup();
-  //OTA_Setup();
+  //SIM_Setup();
+  OTA_Setup();
   MMA8451_Setup();
 
   Timer_Acc.attach_ms(TIMER_ACC_MS, Timer_Acc_interrupt);//INIZIALIZZA TIMER
   Timer_gps.attach_ms(TIMER_GPS_MS, Timer_gps_interrupt);//INIZIALIZZA TIMER
   Timer_1.attach_ms(1000, Timer_1_interrupt);//INIZIALIZZA TIMER
+  //Timer_gsm.attach_ms(2000, Timer_gsm_interrupt);//INIZIALIZZA TIMER
 
   Serial1.println("Setup OK!");
 
 }
 
 void loop() 
-{
+{  
   while (Serial.available() > 0)//LETTURA DATI GPS
     gps.encode(Serial.read());
-    
+
+  ArduinoOTA.handle();
    //Serial1.print("\t"); Serial1.print(X); Serial1.print("\t"); Serial1.print(Y); Serial1.print("\t"); Serial1.println(Z);//STAMPA SU PLOTTER
 }
